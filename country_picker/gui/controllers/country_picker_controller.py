@@ -2,7 +2,7 @@ from PyQt6.QtCore import QObject
 from country_picker.gui.threads.country_fetch_thread import CountryFetchThread
 
 class CountryPickerController(QObject):
-    """Controller connecting view and fetching logic."""
+    """ Controller connecting view and fetching logic """
     def __init__(self, view, preselect_country=None):
         super().__init__()
         self.view = view
