@@ -1,15 +1,19 @@
 from PyQt6.QtCore import QObject, QThread, pyqtSignal
+import locale
 from country_picker.core.service.fetch_countries_raw import fetch_countries_raw
 
 class CountryFetchThread(QThread):
+    """ Background thread to fetch and emit a locale-sorted (fixes Åland Islands from being last) list of country names """
     countries_fetched = pyqtSignal(list)
     fetch_failed = pyqtSignal(str)
 
     def run(self):
         try:
+            locale.setlocale(locale.LC_ALL, '')
             countries = fetch_countries_raw()
-            country_names = sorted(c["name"] for c in countries if isinstance(c, dict) and "name" in c)
-            self.countries_fetched.emit(country_names)
+            names = [c["name"] for c in countries if isinstance(c, dict) and "name" in c]
+            sorted_names = sorted(names, key=locale.strxfrm)
+            self.countries_fetched.emit(sorted_names)
         except Exception as e:
             self.fetch_failed.emit(str(e))
 
