@@ -1,6 +1,7 @@
 from PyQt6.QtCore import QObject, QThread, pyqtSignal
 import locale
 from country_picker.core.service.fetch_countries_defined import fetch_countries_defined
+from requests.exceptions import ConnectionError, Timeout, HTTPError
 
 class CountryFetchThread(QThread):
     """
@@ -22,8 +23,14 @@ class CountryFetchThread(QThread):
                     names.append(c.name)
             country_names = sorted(names, key=locale.strxfrm)
             self.countries_fetched.emit(country_names)
+        except ConnectionError:
+            self.fetch_failed.emit("Connection error")
+        except Timeout:
+            self.fetch_failed.emit("Timeout error")
+        except HTTPError as e:
+            self.fetch_failed.emit(f"HTTP error: {e.response.status_code}")
         except Exception as e:
-            self.fetch_failed.emit(str(e))
+            self.fetch_failed.emit(f"Unexpected error: {str(e)}")
 
 
 class CountryPickerController(QObject):
