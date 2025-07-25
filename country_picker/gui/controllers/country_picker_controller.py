@@ -1,7 +1,8 @@
 from PyQt6.QtCore import QObject, QThread, pyqtSignal
 import locale
-from country_picker.core.service.fetch_countries_dynamic import fetch_countries_dynamic
 from requests.exceptions import ConnectionError, Timeout, HTTPError
+from pydantic import ValidationError
+from country_picker.core.service.fetch_countries_dynamic import fetch_countries_dynamic
 
 class CountryFetchThread(QThread):
     """
@@ -29,6 +30,8 @@ class CountryFetchThread(QThread):
             self.fetch_failed.emit("Timeout error")
         except HTTPError as e:
             self.fetch_failed.emit(f"HTTP error: {e.response.status_code}")
+        except ValidationError as ve:
+            self.fetch_failed.emit("Data validation failed.")
         except Exception as e:
             self.fetch_failed.emit(f"Unexpected error: {str(e)}")
 
