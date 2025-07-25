@@ -5,7 +5,7 @@ def test_country_dynamic_model():
     """
     Test that dynamic country models are generated, that at least one country is present,
     and that all objects are valid instances of the same dynamic model, are Pydantic BaseModel instances,
-    and have a .name attribute.
+    and have a .name attribute
     """
     country_objs = fetch_countries_dynamic()
     assert country_objs, "No countries returned!"

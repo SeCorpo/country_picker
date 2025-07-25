@@ -5,10 +5,10 @@ from country_picker.core.utils.dicts_loose_equivalent import dicts_loose_equival
 def test_defined_country_model_matches_raw():
     """
     Ensure that for each country, the data parsed by the defined Country model
-    remains (loosely) equivalent to the original raw country dictionary.
+    remains (loosely) equivalent to the original raw country dictionary
 
     "Loose equivalence" means differences in missing, empty, None, or default fields are ignored,
-    and dictionaries in lists are matched by content rather than by order.
+    and dictionaries in lists are matched by content rather than by order
     """
     raw_country_dicts = fetch_countries_raw()
     defined_country_objs = [Country.model_validate(country_dict) for country_dict in raw_country_dicts]

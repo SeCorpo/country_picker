@@ -6,10 +6,10 @@ from country_picker.core.service.fetch_countries_raw import fetch_countries_raw
 
 def test_dynamic_model_matches_defined_model():
     """
-    Ensure the dynamic and defined Country models produce equivalent field structures.
+    Ensure the dynamic and defined Country models produce equivalent field structures
 
     Differences in field optionality (e.g., Optional, NoneType) are ignored,
-    but missing fields in one model are reported as mismatches.
+    but missing fields in one model are reported as mismatches
     """
     raw_country_dicts = fetch_countries_raw()
     dynamic_country_model = dynamic_model_from_response(raw_country_dicts, model_name="Country")
