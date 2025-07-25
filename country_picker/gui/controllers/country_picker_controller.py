@@ -1,14 +1,21 @@
 from PyQt6.QtCore import QObject, QThread, pyqtSignal
-from country_picker.core.service.fetch_countries_raw import fetch_countries_raw
+from country_picker.core.service.fetch_countries_dynamic import fetch_countries_dynamic
 
 class CountryFetchThread(QThread):
+    """ Can run with fetch_countries_raw and fetch_countries_dynamic """
     countries_fetched = pyqtSignal(list)
     fetch_failed = pyqtSignal(str)
 
     def run(self):
         try:
-            countries = fetch_countries_raw()
-            country_names = sorted(c["name"] for c in countries if isinstance(c, dict) and "name" in c)
+            countries = fetch_countries_dynamic()
+            names = []
+            for c in countries:
+                if isinstance(c, dict) and "name" in c:
+                    names.append(c["name"])
+                elif hasattr(c, "name") and getattr(c, "name", None):
+                    names.append(c.name)
+            country_names = sorted(names)
             self.countries_fetched.emit(country_names)
         except Exception as e:
             self.fetch_failed.emit(str(e))
