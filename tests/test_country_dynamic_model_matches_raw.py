@@ -5,10 +5,10 @@ from country_picker.core.utils.dicts_loose_equivalent import dicts_loose_equival
 def test_dynamic_country_model_matches_raw():
     """
     Test that each parsed country model, when converted back to a dict,
-    is (loosely) equivalent to the corresponding original raw country dict from the API.
+    is (loosely) equivalent to the corresponding original raw country dict from the API
 
     "Loose equivalence" means differences between missing, None, and empty fields are ignored,
-    and dicts within lists are compared by keys, not by order.
+    and dicts within lists are compared by keys, not by order
     """
     raw_country_dicts = fetch_countries_raw()
     dynamic_country_objs = fetch_countries_dynamic()

@@ -6,7 +6,7 @@ from country_picker.core.utils.dynamic_schema_from_response import dynamic_model
 def fetch_countries_dynamic(model_name: str = "Country") -> List[BaseModel]:
     """
     Fetches all countries, dynamically generates a Pydantic model to match all fields and nested structures
-    found in the data, and returns a validated model instance for each country.
+    found in the data, and returns a validated model instance for each country
     """
     countries = fetch_countries_raw()
     generated_model = dynamic_model_from_response(countries, model_name=model_name)
