@@ -1,5 +1,5 @@
 from PyQt6.QtCore import QObject, QThread, pyqtSignal
-from country_picker.core.service.fetch_countries_dynamic import fetch_countries_dynamic
+from country_picker.core.service.fetch_countries_defined import fetch_countries_defined
 
 class CountryFetchThread(QThread):
     """ Can run with fetch_countries_raw and fetch_countries_dynamic """
@@ -8,7 +8,7 @@ class CountryFetchThread(QThread):
 
     def run(self):
         try:
-            countries = fetch_countries_dynamic()
+            countries = fetch_countries_defined()
             names = []
             for c in countries:
                 if isinstance(c, dict) and "name" in c:
