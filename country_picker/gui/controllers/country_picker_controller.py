@@ -1,40 +1,6 @@
-from PyQt6.QtCore import QObject, QThread, pyqtSignal
-import locale
-from requests.exceptions import ConnectionError, Timeout, HTTPError
-from pydantic import ValidationError
-from country_picker.core.service.fetch_countries_dynamic import fetch_countries_dynamic
-
-class CountryFetchThread(QThread):
-    """
-    Background thread to fetch and emit a locale-sorted (fixes Åland Islands from being last) list of country names
-    Can run with fetch_countries_raw and fetch_countries_dynamic
-    """
-    countries_fetched = pyqtSignal(list)
-    fetch_failed = pyqtSignal(str)
-
-    def run(self):
-        try:
-            locale.setlocale(locale.LC_ALL, '')
-            countries = fetch_countries_dynamic()
-            names = []
-            for c in countries:
-                if isinstance(c, dict) and "name" in c:
-                    names.append(c["name"])
-                elif hasattr(c, "name") and getattr(c, "name", None):
-                    names.append(c.name)
-            country_names = sorted(names, key=locale.strxfrm)
-            self.countries_fetched.emit(country_names)
-        except ConnectionError:
-            self.fetch_failed.emit("Connection error")
-        except Timeout:
-            self.fetch_failed.emit("Timeout error")
-        except HTTPError as e:
-            self.fetch_failed.emit(f"HTTP error: {e.response.status_code}")
-        except ValidationError as ve:
-            self.fetch_failed.emit("Data validation failed.")
-        except Exception as e:
-            self.fetch_failed.emit(f"Unexpected error: {str(e)}")
-
+from PyQt6.QtCore import QObject
+from country_picker.gui.threads.country_fetch_thread import CountryFetchThread
+from country_picker.gui.views.pydantic_dynamic_model_view import PydanticDynamicModelView
 
 class CountryPickerController(QObject):
     """Controller connecting view and fetching logic."""
@@ -45,6 +11,7 @@ class CountryPickerController(QObject):
         self._fetcher = None
 
         self.view.combo_box.currentIndexChanged.connect(self._on_country_selected)
+        self.view.info_button.clicked.connect(self._show_model_info)
 
         self.fetch_countries()
 
@@ -69,3 +36,7 @@ class CountryPickerController(QObject):
     def _on_country_selected(self, index):
         country = self.view.combo_box.currentText() if index >= 0 else ""
         self.view.update_selected_country(country)
+
+    def _show_model_info(self):
+        viewer = PydanticDynamicModelView(self.view)
+        viewer.show()
