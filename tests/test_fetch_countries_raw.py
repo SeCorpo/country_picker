@@ -13,26 +13,27 @@ def test_countries_not_empty():
 
 
 @pytest.mark.dependency()
-def test_first_country_is_dict():
-    assert isinstance(countries[0], dict), "First country should be of type dict"
+def test_all_countries_are_dicts():
+    for i, country in enumerate(countries):
+        assert isinstance(country, dict), f"Country at index {i} is not a dict"
 
 
-@pytest.mark.dependency(depends=["test_first_country_is_dict"])
+@pytest.mark.dependency(depends=["test_all_countries_are_dicts"])
 def test_first_country_has_name_key():
     assert "name" in countries[0], "Key 'name' missing in first country dict"
 
 
-@pytest.mark.dependency(depends=["test_first_country_is_dict"])
+@pytest.mark.dependency(depends=["test_all_countries_are_dicts"])
 def test_first_country_has_alpha2code_key():
     assert "alpha2Code" in countries[0], "Key 'alpha2Code' missing in first country dict"
 
 
-@pytest.mark.dependency(depends=["test_first_country_is_dict"])
+@pytest.mark.dependency(depends=["test_all_countries_are_dicts"])
 def test_first_country_has_region_key():
     assert "region" in countries[0], "Key 'region' missing in first country dict"
 
 
-@pytest.mark.dependency(depends=["test_first_country_is_dict"])
+@pytest.mark.dependency(depends=["test_all_countries_are_dicts"])
 def test_print_first_random_last_country_names():
     first_name = countries[0].get("name")
     last_name = countries[-1].get("name")
