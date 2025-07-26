@@ -18,19 +18,23 @@ def test_all_countries_are_pydantic_models():
     for i, country in enumerate(countries):
         assert isinstance(country, BaseModel), f"Country at index {i} is not a Pydantic BaseModel"
 
-@pytest.mark.dependency(depends=["test_all_countries_are_pydantic_models"])
-def test_first_country_has_name_key():
-    assert hasattr(countries[0], "name"), "Attribute 'name' missing in first country"
-
 
 @pytest.mark.dependency(depends=["test_all_countries_are_pydantic_models"])
-def test_first_country_has_alpha2code_key():
-    assert hasattr(countries[0], "alpha2Code"), "Attribute 'alpha2Code' missing in first country"
+def test_all_countries_have_name_attr():
+    for i, country in enumerate(countries):
+        assert hasattr(country, "name"), f"Attribute 'name' missing in country model at index {i}"
 
 
 @pytest.mark.dependency(depends=["test_all_countries_are_pydantic_models"])
-def test_first_country_has_region_key():
-    assert hasattr(countries[0], "region"), "Attribute 'region' missing in first country"
+def test_all_countries_have_alpha2code_attr():
+    for i, country in enumerate(countries):
+        assert hasattr(country, "alpha2Code"), f"Attribute 'alpha2Code' missing in country model at index {i}"
+
+
+@pytest.mark.dependency(depends=["test_all_countries_are_pydantic_models"])
+def test_all_countries_have_region_attr():
+    for i, country in enumerate(countries):
+        assert hasattr(country, "region"), f"Attribute 'region' missing in country model at index {i}"
 
 
 @pytest.mark.dependency(depends=["test_all_countries_are_pydantic_models"])

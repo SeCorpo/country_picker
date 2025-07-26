@@ -23,22 +23,21 @@ A small Python GUI application built with PyQt6 that fetches and displays countr
   python -m country_picker --select Netherlands
 
 ### Tests (pytest)
-- test_country_dynamic_model PASSED
 - test_dynamic_country_model_matches_raw PASSED
 - test_countries_is_list PASSED
 - test_countries_not_empty PASSED
-- test_first_country_is_model PASSED
-- test_first_country_has_name_key PASSED
-- test_first_country_has_alpha2code_key PASSED
-- test_first_country_has_region_key PASSED
+- test_all_countries_are_pydantic_models PASSED
+- test_all_countries_have_name_attr PASSED
+- test_all_countries_have_alpha2code_attr PASSED
+- test_all_countries_have_region_attr PASSED
 - test_print_first_random_last_country_names PASSED
 - test_countries_is_list PASSED
 - test_countries_not_empty PASSED
-- test_first_country_is_dict PASSED
-- test_first_country_has_name_key PASSED
-- test_first_country_has_alpha2code_key PASSED
-- test_first_country_has_region_key PASSED
-- test_print_first_random_last_country_names PASSED
+- test_all_countries_are_dicts PASSED
+- test_all_countries_have_name_key PASSED
+- test_all_countries_have_alpha2code_key PASSED
+- test_all_countries_have_region_key PASSED
+- test_print_first_random_last_country_names PASSED 
 
 ### Structure
 ```text
@@ -50,7 +49,6 @@ country_picker/
 │   │   ├── fetch_countries_dynamic.py
 │   │   ├── fetch_countries_raw.py
 │   └── utils/
-│       ├── dicts_loose_equivalent.py
 │       ├── dynamic_schema_from_response.py
 │       └── logger.py
 ├── gui/
@@ -61,13 +59,13 @@ country_picker/
 │   │   └── model_schema_thread.py
 │   └── views/
 │       ├── country_picker_view.py
-│       ├── defined_model_view.py
 │       └── pydantic_dynamic_model_view.py
 ├── __main__.py
 
 tests/
-├── test_country_dynamic_model.py
-├── test_country_dynamic_model_matches_raw.py
+├── utils/
+│   ├── compare_dicts_loosely.py
+├── test_country_dynamic_parsed_matches_raw.py
 ├── test_fetch_countries_dynamic.py
 └── test_fetch_countries_raw.py
 
