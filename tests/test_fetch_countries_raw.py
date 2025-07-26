@@ -19,18 +19,21 @@ def test_all_countries_are_dicts():
 
 
 @pytest.mark.dependency(depends=["test_all_countries_are_dicts"])
-def test_first_country_has_name_key():
-    assert "name" in countries[0], "Key 'name' missing in first country dict"
+def test_all_countries_have_name_key():
+    for i, country in enumerate(countries):
+        assert "name" in country, f"Key 'name' missing in country dict at index {i}"
 
 
 @pytest.mark.dependency(depends=["test_all_countries_are_dicts"])
-def test_first_country_has_alpha2code_key():
-    assert "alpha2Code" in countries[0], "Key 'alpha2Code' missing in first country dict"
+def test_all_countries_have_alpha2code_key():
+    for i, country in enumerate(countries):
+        assert "alpha2Code" in country, f"Key 'alpha2Code' missing in country dict at index {i}"
 
 
 @pytest.mark.dependency(depends=["test_all_countries_are_dicts"])
-def test_first_country_has_region_key():
-    assert "region" in countries[0], "Key 'region' missing in first country dict"
+def test_all_countries_have_region_key():
+    for i, country in enumerate(countries):
+        assert "region" in country, f"Key 'region' missing in country dict at index {i}"
 
 
 @pytest.mark.dependency(depends=["test_all_countries_are_dicts"])
