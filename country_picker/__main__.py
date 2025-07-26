@@ -16,7 +16,7 @@ def main():
 
     window = QMainWindow()
     window.setWindowTitle("Country Picker")
-    window.setGeometry(300, 300, 800, 600)
+    window.setGeometry(300, 300, 500, 150)
 
     page = CountryPickerView()
     controller = CountryPickerController(page, preselect_country=args.select)
