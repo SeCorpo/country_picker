@@ -14,26 +14,27 @@ def test_countries_not_empty():
 
 
 @pytest.mark.dependency()
-def test_first_country_is_model():
-    assert isinstance(countries[0], BaseModel), "First country should be of type Pydantic BaseModel"
+def test_all_countries_are_pydantic_models():
+    for i, country in enumerate(countries):
+        assert isinstance(country, BaseModel), f"Country at index {i} is not a Pydantic BaseModel"
 
 
-@pytest.mark.dependency(depends=["test_first_country_is_model"])
+@pytest.mark.dependency(depends=["test_all_countries_are_pydantic_models"])
 def test_first_country_has_name_key():
     assert hasattr(countries[0], "name"), "Attribute 'name' missing in first country"
 
 
-@pytest.mark.dependency(depends=["test_first_country_is_model"])
+@pytest.mark.dependency(depends=["test_all_countries_are_pydantic_models"])
 def test_first_country_has_alpha2code_key():
     assert hasattr(countries[0], "alpha2Code"), "Attribute 'alpha2Code' missing in first country"
 
 
-@pytest.mark.dependency(depends=["test_first_country_is_model"])
+@pytest.mark.dependency(depends=["test_all_countries_are_pydantic_models"])
 def test_first_country_has_region_key():
     assert hasattr(countries[0], "region"), "Attribute 'region' missing in first country"
 
 
-@pytest.mark.dependency(depends=["test_first_country_is_model"])
+@pytest.mark.dependency(depends=["test_all_countries_are_pydantic_models"])
 def test_print_first_random_last_country_names():
     first_name = getattr(countries[0], "name", None)
     last_name = getattr(countries[-1], "name", None)
