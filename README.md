@@ -37,7 +37,6 @@ A small Python GUI application built with PyQt6 that fetches and displays countr
 │   ├── __main__.py
 │   ├── core
 │   │   ├── exceptions
-│   │   ├── models
 │   │   ├── service
 │   │   │   └── fetch_countries_raw.py
 │   │   └── utils
@@ -47,11 +46,8 @@ A small Python GUI application built with PyQt6 that fetches and displays countr
 │   │   │   └── country_picker_controller.py
 │   │   ├── threads
 │   │   │   ├── country_fetch_thread.py
-│   │   │   └── model_schema_thread.py
 │   │   └── views
 │   │       ├── country_picker_view.py
-│   │       ├── defined_model_view.py
-│   │       └── pydantic_dynamic_model_view.py
 ├── tests
 │   └── test_fetch_countries_raw.py
 ├── README.md
