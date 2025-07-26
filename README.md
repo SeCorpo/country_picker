@@ -25,7 +25,7 @@ A small Python GUI application built with PyQt6 that fetches and displays countr
 ### Tests (pytest)
 - test_countries_is_list PASSED
 - test_countries_not_empty PASSED
-- test_first_country_is_dict PASSED
+- test_all_countries_are_dicts PASSED
 - test_first_country_has_name_key PASSED
 - test_first_country_has_alpha2code_key PASSED
 - test_first_country_has_region_key PASSED
