@@ -37,6 +37,8 @@ A small Python GUI application built with PyQt6 that fetches and displays countr
 │   ├── __main__.py
 │   ├── core
 │   │   ├── exceptions
+│   │   └── theme
+│   │       └── theme.py
 │   │   ├── service
 │   │   │   └── fetch_countries_raw.py
 │   │   └── utils
