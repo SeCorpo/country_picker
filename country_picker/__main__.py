@@ -1,6 +1,7 @@
 import sys
 import argparse
 from PyQt6.QtWidgets import QApplication, QMainWindow
+from country_picker.core.theme.theme import apply_dark_palette
 from country_picker.gui.views.country_picker_view import CountryPickerView
 from country_picker.gui.controllers.country_picker_controller import CountryPickerController
 
@@ -13,6 +14,9 @@ def parse_args():
 def main():
     args = parse_args()
     app = QApplication(sys.argv)
+
+    app.setStyle("Fusion")
+    apply_dark_palette(app)
 
     window = QMainWindow()
     window.setWindowTitle("Country Picker")
