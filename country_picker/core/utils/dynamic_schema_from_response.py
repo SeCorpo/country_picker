@@ -39,20 +39,7 @@ def _is_list_of_dicts(val):
     return isinstance(val, list) and bool(val) and all(isinstance(item, dict) for item in val if item is not None)
 
 def _is_list_of_scalars(val):
-    return isinstance(val, list) and (not val or all(not isinstance(item, dict) for item in val if item is not None))
-
-def _merge_list_of_dicts_across_data(data: List[Dict[str, Any]], key: str) -> Dict[str, Any]:
-    all_dicts = []
-    for item in data:
-        val = item.get(key, [])
-        if isinstance(val, list):
-            all_dicts.extend([entry for entry in val if isinstance(entry, dict)])
-    merged = {}
-    for d in all_dicts:
-        for k, v in d.items():
-            if k not in merged or merged[k] is None:
-                merged[k] = v
-    return merged
+    return isinstance(val, list) and not val or all(not isinstance(item, dict) for item in val if item is not None)
 
 def _generate_structure(data: List[Dict[str, Any]]) -> Dict[str, Any]:
     result = {}
